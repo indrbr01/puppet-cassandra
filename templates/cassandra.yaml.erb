@@ -21,7 +21,7 @@ cluster_name: '<%= cluster_name %>'
 #
 # If you already have a cluster with 1 token per node, and wish to migrate to
 # multiple tokens per node, see http://wiki.apache.org/cassandra/Operations
-num_tokens: <%= num_tokens %>
+#num_tokens: <%= num_tokens %>
 
 # If you haven't specified num_tokens, or have set it to the default of 1 then
 # you should always specify InitialToken when setting up a production
@@ -43,11 +43,11 @@ hinted_handoff_enabled: true
 # created until it has been seen alive and gone down again.
 max_hint_window_in_ms: 10800000 # 3 hours
 # throttle in KB's per second, per delivery thread
-hinted_handoff_throttle_in_kb: 1024
+#hinted_handoff_throttle_in_kb: 1024
 # Number of threads with which to deliver hints;
 # Consider increasing this number when you have multi-dc deployments, since
 # cross-dc handoff tends to be slower
-max_hints_delivery_threads: 2
+#max_hints_delivery_threads: 2
 
 # The following setting populates the page cache on memtable flush and compaction
 # WARNING: Enable this setting only when the whole node's data fits in memory.
@@ -71,13 +71,13 @@ authenticator: org.apache.cassandra.auth.AllowAllAuthenticator
 # - AllowAllAuthorizer allows any action to any user - set it to disable authorization.
 # - CassandraAuthorizer stores permissions in system_auth.permissions table. Please
 #   increase system_auth keyspace replication factor if you use this authorizer.
-authorizer: org.apache.cassandra.auth.AllowAllAuthorizer
+#authorizer: org.apache.cassandra.auth.AllowAllAuthorizer
 
 # Validity period for permissions cache (fetching permissions can be an
 # expensive operation depending on the authorizer, CassandraAuthorizer is
 # one example). Defaults to 2000, set to 0 to disable.
 # Will be disabled automatically for AllowAllAuthorizer.
-permissions_validity_in_ms: 2000
+#permissions_validity_in_ms: 2000
 
 # The partitioner is responsible for distributing rows (by key) across
 # nodes in the cluster.  Any IPartitioner may be used, including your
@@ -100,7 +100,8 @@ permissions_validity_in_ms: 2000
 #
 # See http://wiki.apache.org/cassandra/Operations for more on
 # partitioners and token selection.
-partitioner: <%= partitioner %>
+#partitioner: <%= partitioner %>
+partitioner: RandomPartitioner
 
 # directories where Cassandra should store data on disk.
 data_file_directories:<% data_file_directories.each do |data_file_directory| %>
@@ -117,7 +118,7 @@ commitlog_directory: <%= commitlog_directory %>
 #              remaining available sstables.  This means you WILL see obsolete
 #              data at CL.ONE!
 # ignore: ignore fatal errors and let requests fail, as in pre-1.2 Cassandra
-disk_failure_policy: <%= disk_failure_policy %>
+#disk_failure_policy: <%= disk_failure_policy %>
 
 # Maximum size of the key cache in memory.
 #
@@ -131,7 +132,7 @@ disk_failure_policy: <%= disk_failure_policy %>
 # NOTE: if you reduce the size, you may not get you hottest keys loaded on startup.
 #
 # Default value is empty to make it "auto" (min(5% of Heap (in MB), 100MB)). Set to 0 to disable key cache.
-key_cache_size_in_mb:
+#key_cache_size_in_mb:
 
 # Duration in seconds after which Cassandra should
 # safe the keys cache. Caches are saved to saved_caches_directory as
@@ -142,7 +143,7 @@ key_cache_size_in_mb:
 # has limited use.
 #
 # Default is 14400 or 4 hours.
-key_cache_save_period: 14400
+#key_cache_save_period: 14400
 
 # Number of keys from the key cache to save
 # Disabled by default, meaning all keys are going to be saved
@@ -152,7 +153,7 @@ key_cache_save_period: 14400
 # NOTE: if you reduce the size, you may not get you hottest keys loaded on startup.
 #
 # Default value is 0, to disable row caching.
-row_cache_size_in_mb: 0
+#row_cache_size_in_mb: 0
 
 # Duration in seconds after which Cassandra should
 # safe the row cache. Caches are saved to saved_caches_directory as specified
@@ -163,7 +164,7 @@ row_cache_size_in_mb: 0
 # has limited use.
 #
 # Default is 0 to disable saving the row cache.
-row_cache_save_period: 0
+#row_cache_save_period: 0
 
 # Number of keys from the row cache to save
 # Disabled by default, meaning all keys are going to be saved
@@ -183,7 +184,7 @@ row_cache_save_period: 0
 # that implements org.apache.cassandra.cache.IRowCacheProvider.
 #
 # Defaults to SerializingCacheProvider
-row_cache_provider: SerializingCacheProvider
+#row_cache_provider: SerializingCacheProvider
 
 # saved caches
 saved_caches_directory: <%= saved_caches_directory %>
@@ -212,7 +213,7 @@ commitlog_sync_period_in_ms: 10000
 # archiving commitlog segments (see commitlog_archiving.properties),
 # then you probably want a finer granularity of archiving; 8 or 16 MB
 # is reasonable.
-commitlog_segment_size_in_mb: 32
+#commitlog_segment_size_in_mb: 32
 
 # any class that implements the SeedProvider interface and has a
 # constructor that takes a Map<String, String> of parameters will do.
@@ -296,15 +297,15 @@ memtable_flush_queue_size: 4
 # buffers. Enable this to avoid sudden dirty buffer flushing from
 # impacting read latencies. Almost always a good idea on SSD:s; not
 # necessarily on platters.
-trickle_fsync: false
-trickle_fsync_interval_in_kb: 10240
+#trickle_fsync: false
+#trickle_fsync_interval_in_kb: 10240
 
 # TCP port, for commands and data
 storage_port: <%= storage_port %>
 
 # SSL port, for encrypted communication.  Unused unless enabled in
 # encryption_options
-ssl_storage_port: 7001
+#ssl_storage_port: 7001
 
 # Address to bind to and tell other Cassandra nodes to connect to. You
 # _must_ change this if you want multiple nodes to be able to
@@ -331,9 +332,9 @@ listen_address: <%= listen_address %>
 # transport is considered beta.
 # Please note that the address on which the native transport is bound is the
 # same as the rpc_address. The port however is different and specified below.
-start_native_transport: <%= start_native_transport %>
+#start_native_transport: <%= start_native_transport %>
 # port for the CQL native transport to listen for clients on
-native_transport_port: <%= native_transport_port %>
+#native_transport_port: <%= native_transport_port %>
 # The minimum and maximum threads for handling requests when the native
 # transport is used. The meaning is those is similar to the one of
 # rpc_min_threads and rpc_max_threads, though the default differ slightly and
@@ -342,7 +343,7 @@ native_transport_port: <%= native_transport_port %>
 # native_transport_max_threads: 128
 
 # Whether to start the thrift rpc server.
-start_rpc: <%= start_rpc %>
+#start_rpc: <%= start_rpc %>
 
 # The address to bind the Thrift RPC service to -- clients connect
 # here. Unlike ListenAddress above, you *can* specify 0.0.0.0 here if
@@ -428,7 +429,7 @@ snapshot_before_compaction: <%= snapshot_before_compaction %>
 # or dropping of column families. The STRONGLY advised default of true 
 # should be used to provide data safety. If you set this flag to false, you will
 # lose data on truncation or drop.
-auto_snapshot: <%= auto_snapshot %>
+#auto_snapshot: <%= auto_snapshot %>
 
 # Add column indexes to a row after its contents reach this size.
 # Increase if your column values are large, or if you have a very large
@@ -462,7 +463,7 @@ in_memory_compaction_limit_in_mb: 64
 # This is usually only useful for SSD-based hardware: otherwise, 
 # your concern is usually to get compaction to do LESS i/o (see:
 # compaction_throughput_mb_per_sec), not more.
-multithreaded_compaction: <%= multithreaded_compaction %>
+#multithreaded_compaction: <%= multithreaded_compaction %>
 
 # Throttles compaction to the given total throughput across the entire
 # system. The faster you insert data, the faster you need to compact in
@@ -485,17 +486,17 @@ compaction_preheat_key_cache: true
 # stream_throughput_outbound_megabits_per_sec: 200
 
 # How long the coordinator should wait for read operations to complete
-read_request_timeout_in_ms: 10000
+#read_request_timeout_in_ms: 10000
 # How long the coordinator should wait for seq or index scans to complete
-range_request_timeout_in_ms: 10000
+#range_request_timeout_in_ms: 10000
 # How long the coordinator should wait for writes to complete
-write_request_timeout_in_ms: 10000
+#write_request_timeout_in_ms: 10000
 # How long the coordinator should wait for truncates to complete
 # (This can be much longer, because unless auto_snapshot is disabled
 # we need to flush first so we can snapshot before removing the data.)
-truncate_request_timeout_in_ms: 60000
+#truncate_request_timeout_in_ms: 60000
 # The default timeout for other, miscellaneous operations
-request_timeout_in_ms: 10000
+#request_timeout_in_ms: 10000
 
 # Enable operation timeout information exchange between nodes to accurately
 # measure request timeouts, If disabled cassandra will assuming the request
@@ -503,7 +504,7 @@ request_timeout_in_ms: 10000
 #
 # Warning: before enabling this property make sure to ntp is installed
 # and the times are synchronized between the nodes.
-cross_node_timeout: false
+#cross_node_timeout: false
 
 # Enable socket timeout for streaming operation.
 # When a timeout occurs during streaming, streaming is retried from the start
@@ -648,12 +649,12 @@ index_interval: 128
 # the keystore and truststore.  For instructions on generating these files, see:
 # http://download.oracle.com/javase/6/docs/technotes/guides/security/jsse/JSSERefGuide.html#CreateKeystore
 #
-server_encryption_options:
-    internode_encryption: none
-    keystore: conf/.keystore
-    keystore_password: cassandra
-    truststore: conf/.truststore
-    truststore_password: cassandra
+#server_encryption_options:
+    #internode_encryption: none
+    #keystore: conf/.keystore
+    #keystore_password: cassandra
+    #truststore: conf/.truststore
+    #truststore_password: cassandra
     # More advanced defaults below:
     # protocol: TLS
     # algorithm: SunX509
@@ -662,10 +663,10 @@ server_encryption_options:
     # require_client_auth: false
 
 # enable or disable client/server encryption.
-client_encryption_options:
-    enabled: false
-    keystore: conf/.keystore
-    keystore_password: cassandra
+#client_encryption_options:
+    #enabled: false
+    #keystore: conf/.keystore
+    #keystore_password: cassandra
     # require_client_auth: false
     # Set trustore and truststore_password if require_client_auth is true
     # truststore: conf/.truststore
@@ -681,10 +682,10 @@ client_encryption_options:
 # can be:  all  - all traffic is compressed
 #          dc   - traffic between different datacenters is compressed
 #          none - nothing is compressed.
-internode_compression: <%= internode_compression %>
+#internode_compression: <%= internode_compression %>
 
 # Enable or disable tcp_nodelay for inter-dc communication.
 # Disabling it will result in larger (but fewer) network packets being sent,
 # reducing overhead from the TCP protocol itself, at the cost of increasing
 # latency if you block for cross-datacenter responses.
-inter_dc_tcp_nodelay: true
+#inter_dc_tcp_nodelay: true

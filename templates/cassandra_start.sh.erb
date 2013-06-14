@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -u
+set -e 
+
+case ${1-help} in
+start)
+        sig 0 && echo >&2 "Already running" && exit 0
+        su - <%= @vagrant_user %> -p -c "sudo cassandra &"
+        ;;
+stop)
+        sig 3 && exit 0
+        echo >&2 "Not running"
+        ;;
+force-stop)
+        sig 9 && exit 0
+        echo >&2 "Not running"
+        ;;
+restart|reload)
+        sig USR2 && echo reloaded OK && exit 0
+        echo >&2 "Couldn't reload, starting '/etc/init.d/cassandra start' instead"
+        ;;
+esac
